@@ -1,0 +1,12 @@
+test item: 
+Great Sword                    1 
+
+test game item node: 
+Amulet of Feasting             2 (------)
+
+
+test 2 items: 
+Amulet of Feasting             2 (Potion of Fire Walking)
+
+Potion of Fire Walking         3 (------)
+
