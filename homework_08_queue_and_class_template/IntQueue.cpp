@@ -1,42 +1,53 @@
-#include"IntList.h"
+#include"IntQueue.h"
 #include<stdexcept>
+#include<fstream>
+using std::ostream;
 
-bool IntList::is_empty( ) const{
+bool IntQueue::is_empty( ) const{
     bool answer = false;
-    if(head == nullptr){
+    if(list.get_head() == nullptr){
         answer = true;
     }
     return answer;
 }
 
-void IntList::add_front(int newData){
+void IntQueue::enqueue(int newData){
     IntNode* NewNode = new IntNode{newData};
-    NewNode->set_next(head);
-    head = NewNode;
+    if(list.get_tail() != nullptr){
+        list.get_tail()->set_next(NewNode);
+        list.set_tail(NewNode);
+    }
+    else{
+        list.set_head(NewNode);
+        list.set_tail(NewNode);
+    }
 }
 
-void IntList::write( ostream& outfile ) const{
-    IntNode* current = head;
+ostream& IntQueue::debug_write( ostream& outfile ) const{
+    IntNode* current = list.get_head();
+    if(list.get_head() == nullptr){
+        throw std::length_error("List is empty");
+    }
     while(current != nullptr){
         outfile << *current;
         current = current->get_next();
-        
     }
-}
-
-ostream& operator<<( std::ostream& outfile, const IntList& list ){
-    list.write(outfile);
     return outfile;
 }
 
-int IntList::remove_front(){
+ostream& operator<<( std::ostream& outfile, const IntList& list ){
+    list.debug_write(outfile);
+    return outfile;
+}
+
+int IntQueue::dequeue(){
     int value = 0;
-    if(head == nullptr){
+    if(list.get_head() == nullptr){
         throw std::length_error("List out of range");
     }
     else{
-        IntNode* current = head;
-        head = current->get_next();
+        IntNode* current = list.get_head();
+        list.set_head(current->get_next());
         value = current->get_data();
         delete current;
         current = nullptr;

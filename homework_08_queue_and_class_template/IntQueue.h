@@ -9,7 +9,7 @@ public:
     bool is_empty( ) const;
     void enqueue( int newData );
     int  dequeue( );
-    void debug_write( ostream& outfile ) const;
+    ostream& debug_write( ostream& outfile ) const;
 
 private:
     IntList list;
